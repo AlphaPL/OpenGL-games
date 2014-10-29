@@ -96,6 +96,9 @@
     <None Include="SingleColor.fragmentshader" />
     <None Include="TransformVertexShader.vertexshader" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HelpfulFuncs.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

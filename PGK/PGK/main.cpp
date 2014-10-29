@@ -1,109 +1,6 @@
-// Include standard headers
-#include <stdio.h>
-#include <stdlib.h>
-#include <algorithm>
-// Include GLEW
-#include <GL/glew.h>
-#include <time.h>
-// Include GLFW
-#include <GLFW/glfw3.h>
+#include "HelpfulFuncs.hpp"
 GLFWwindow* window;
 
-// Include GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
-using namespace glm;
-using namespace std;
-#include <shader.hpp>
-#include <texture.hpp>
-#include <controls.hpp>
-#include <text2D.hpp>
-
-void DrawWithTexture(GLuint TextureShaders, GLuint MatrixID, glm::mat4 MVP, GLuint vertexbuffer, 	GLuint uvbuffer, GLuint TableTex ,	GLuint TextureID, int howmany)
-{
-
-	
-		// Use our shader
-		glUseProgram(TextureShaders);
-		// Send our transformation to the currently bound shader, 
-		// in the "MVP" uniform
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-				// Bind our texture in Texture Unit 0
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, TableTex);
-		// Set our "myTextureSampler" sampler to user Texture Unit 0
-		glUniform1i(TextureID, 0);
-
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-		// 2nd attribute buffer : UVs
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-		glVertexAttribPointer(
-			1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-			2,                                // size : U+V => 2
-			GL_FLOAT,                         // type
-			GL_FALSE,                         // normalized?
-			0,                                // stride
-			(void*)0                          // array buffer offset
-		);
-		// Draw the triangle !
-		glDrawArrays(GL_TRIANGLES, 0, howmany); // 3 indices starting at 0 -> 1 triangle
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-}
-
-
-void DrawWithoutTexture(GLuint TextureShaders, GLuint MatrixID, glm::mat4 MVP, GLuint vertexbuffer, 	GLuint uvbuffer, int howmany)
-{
-
-	
-		// Use our shader
-		glUseProgram(TextureShaders);
-		// Send our transformation to the currently bound shader, 
-		// in the "MVP" uniform
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-		// 2nd attribute buffer : UVs
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-		glVertexAttribPointer(
-			1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-			3,                                // size : U+V => 2
-			GL_FLOAT,                         // type
-			GL_FALSE,                         // normalized?
-			0,                                // stride
-			(void*)0                          // array buffer offset
-		);
-		// Draw the triangle !
-		glDrawArrays(GL_TRIANGLES, 0, howmany); // 3 indices starting at 0 -> 1 triangle
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-}
 
 int main( void )
 {
@@ -399,15 +296,8 @@ int main( void )
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[4]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_for_arrow), buffer_data_for_arrow, GL_STATIC_DRAW);
 
-	GLuint uvbuffer;
-	glGenBuffers(1, &uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(uv_data_for_table), uv_data_for_table, GL_STATIC_DRAW);
-
-	GLuint colorbuffer;
-	glGenBuffers(1, &colorbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_for_cards), color_buffer_for_cards, GL_STATIC_DRAW);
+	GLuint uvbuffer  = genBuffer((GLfloat*)uv_data_for_table, sizeof(uv_data_for_table));
+	GLuint colorbuffer = genBuffer((GLfloat*)color_buffer_for_cards, sizeof(color_buffer_for_cards));;
 	
 
 	
