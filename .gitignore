@@ -44,3 +44,7 @@ Temporary Items
 
 PGK/PGK.opensdf
 PGK/PGK.sdf
+*.tlog
+*.obj
+*.tlog
+*.pdb
