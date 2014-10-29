@@ -1,10 +1,10 @@
-﻿Build started 2014-10-29 17:09:44.
+﻿Build started 2014-10-29 17:56:58.
      1>Project "C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\PGK\PGK.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glfw-3.0.1.bin.WIN32\include" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glew-1.9.0\include" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\common" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glm" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
      1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(7): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(437): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(393): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
          GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
          GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
@@ -19,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.61
+Time Elapsed 00:00:02.11

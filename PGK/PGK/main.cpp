@@ -5,43 +5,10 @@ GLFWwindow* window;
 int main( void )
 {
 	std::srand(time(0));
-	// Initialise GLFW
-	if( !glfwInit() )
-	{
-		fprintf( stderr, "Failed to initialize GLFW\n" );
+
+	if(init(window))
 		return -1;
-	}
 
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	// Open a window and create its OpenGL context
-	window = glfwCreateWindow( 1024, 768, "Match Two game", NULL, NULL);
-	if( window == NULL ){
-		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
-		glfwTerminate();
-		return -1;
-	}
-	glfwMakeContextCurrent(window);
-
-	// Initialize GLEW
-	glewExperimental = true; // Needed for core profile
-	if (glewInit() != GLEW_OK) {
-		fprintf(stderr, "Failed to initialize GLEW\n");
-		return -1;
-	}
-
-	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSetCursorPos(window, 1024/2, 768/2);
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-	// Enable depth test
-	glEnable(GL_DEPTH_TEST);
-	// Accept fragment if it closer to the camera than the former one
-	glDepthFunc(GL_LESS); 
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -278,23 +245,12 @@ int main( void )
 	// Setup buffers and 2D text 
 
 	initText2D( "Holstein.DDS" );
-
 	GLuint vertexbuffer[5];
-	glGenBuffers(5, vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_for_table), buffer_data_for_table, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_for_card), buffer_data_for_card, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_for_card), buffer_data_for_card_back, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[3]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_for_card_border), buffer_data_for_card_border, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer[4]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_for_arrow), buffer_data_for_arrow, GL_STATIC_DRAW);
+	vertexbuffer[0] = genBuffer(buffer_data_for_table,sizeof(buffer_data_for_table));
+	vertexbuffer[1] = genBuffer(buffer_data_for_card,sizeof(buffer_data_for_card));
+	vertexbuffer[2] = genBuffer(buffer_data_for_card_back,sizeof(buffer_data_for_card_back));
+	vertexbuffer[3] = genBuffer(buffer_data_for_card_border,sizeof(buffer_data_for_card_border));
+	vertexbuffer[4] = genBuffer(buffer_data_for_arrow,sizeof(buffer_data_for_arrow));
 
 	GLuint uvbuffer  = genBuffer((GLfloat*)uv_data_for_table, sizeof(uv_data_for_table));
 	GLuint colorbuffer = genBuffer((GLfloat*)color_buffer_for_cards, sizeof(color_buffer_for_cards));;
