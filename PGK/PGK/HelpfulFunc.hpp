@@ -136,7 +136,7 @@ int init(GLFWwindow*& window)
 		fprintf(stderr, "Failed to initialize GLEW\n");
 		return -1;
 	}
-
+	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetCursorPos(window, 1024/2, 768/2);
 	glEnable(GL_DEPTH_TEST);

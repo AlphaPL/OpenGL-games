@@ -48,3 +48,9 @@ PGK/PGK.sdf
 *.obj
 *.tlog
 *.pdb
+PGK/Debug/PGK.pdb
+*.obj
+*.log
+*.idb
+*.pdb
+*.exe
