@@ -157,4 +157,39 @@ int init(GLFWwindow*& window)
 	return 0;
 }
 
+void startAnimation(mat4& View, float& camManip, bool& fadeout, bool& game, GLFWwindow*& window)
+{
+			if(camManip<0 && !fadeout)
+			{
+				camManip +=0.5;
+				View       = glm::lookAt(
+										glm::vec3(camManip,0,45), // Camera is at (4,3,3), in World Space
+										glm::vec3(0,0,0), // and looks at the origin
+										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+								   );
+			}	
+			else
+			{
+				if(camManip>6.28)
+					camManip=0.1;
+				if(!fadeout)
+				camManip += 0.01;
+				else
+					if(camManip>0)
+						camManip-=0.01;
+					else
+					{
+						game = true;
+						camManip = 45;
+					}
+				View       = glm::lookAt(
+										glm::vec3(sin(camManip*2)*7,-sin(camManip)*7,45), // Camera is at (4,3,3), in World Space
+										glm::vec3(0,0,0), // and looks at the origin
+										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+										);
+				if(glfwGetKey( window, GLFW_KEY_SPACE))
+					fadeout=true;
+			}
+};
+
 #endif
