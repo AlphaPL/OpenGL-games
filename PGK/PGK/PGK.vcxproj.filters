@@ -58,5 +58,8 @@
     <ClInclude Include="Background.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Belka.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

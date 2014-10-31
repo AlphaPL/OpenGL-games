@@ -1,6 +1,6 @@
 #include"HelpfulFuncs.hpp"
 #include"Background.hpp"
-
+#include"Belka.hpp"
 GLFWwindow* window;
 
 
@@ -45,7 +45,8 @@ int main( void )
 	GLuint TextureShaders = LoadShaders( "SimpleTransform.vertexshader", "SingleColor.fragmentshader" );
 	GLuint MatrixID = glGetUniformLocation(TextureShaders, "MVP");
 	GLuint ColorShaders = LoadShaders( "TransformVertexShader.vertexshader", "ColorFragmentShader.fragmentshader" );
-			Background back;
+	Background back;
+	Belka belka;
 	GLuint TextureID  = glGetUniformLocation(TextureShaders, "myTextureSampler");
 
 
@@ -53,76 +54,44 @@ int main( void )
 
 	initText2D( "Holstein.DDS" );
 
-
-	
-	
-
-
 	float camManip=-200;
-
 	bool fadeout = false;
 	bool game = false;
+
+	
+	float heheszki = 0;
 	do{
+		if (glfwGetKey( window, GLFW_KEY_LEFT ) == GLFW_PRESS)
+			belka.moveLeft();
+		if (glfwGetKey( window, GLFW_KEY_RIGHT ) == GLFW_PRESS)
+			belka.moveRight();
 
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 		if(!game)
-		{
-			if(camManip<0 && !fadeout)
-			{
-				camManip +=0.5;
-				View       = glm::lookAt(
-										glm::vec3(camManip,0,45), // Camera is at (4,3,3), in World Space
-										glm::vec3(0,0,70), // and looks at the origin
-										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-								   );
-			}
-			else
-			{
-				if(camManip>6.28)
-					camManip=0.1;
-				if(!fadeout)
-				camManip += 0.01;
-				else
-					if(camManip>0)
-						camManip-=0.01;
-					else
-					{
-						game = true;
-						camManip = 3.14;
-					}
-				View       = glm::lookAt(
-										glm::vec3(sin(camManip*2)*7,-sin(camManip)*7,45), // Camera is at (4,3,3), in World Space
-										glm::vec3(0,0,70), // and looks at the origin
-										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-										);
-				if(glfwGetKey( window, GLFW_KEY_SPACE))
-					fadeout=true;
-			}
-		}
+			startAnimation(View, camManip, fadeout, game, window);
 		else
 		{
-							
-							View   = glm::lookAt(
-										glm::vec3(0,0,45), // Camera is at (4,3,3), in World Space
+
+			View       = glm::lookAt(
+										glm::vec3(0,0,camManip), // Camera is at (4,3,3), in World Space
 										glm::vec3(0,0,0), // and looks at the origin
 										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-								   );
+										);
+			if(heheszki < 180.0f)
+				heheszki+=1;	
+			if(camManip>4.5)
+				camManip-=0.1;
 		}
 
-	
-
-		// Drawing and rotations
-
-
-		// Draw table background
-
-
-		back.draw(MVP,Projection,View, Model, TextureShaders, MatrixID, TextureID);
+		if(game)
+			belka.draw(MVP,Projection, View, Model, TextureShaders, MatrixID, TextureID);
+		back.draw(MVP,Projection,View,  Model * glm::rotate(mat4(1.0f), heheszki, vec3(0,1,0)) , TextureShaders, MatrixID, TextureID);
+		
 
 	
 		// Draw Text
 
-		if(camManip>0)
+		if(camManip>0 && !game)
 			printText2D("Press any button to start", 30, 100, 30);
 		// Swap Buffers
 		glfwSwapBuffers(window);
