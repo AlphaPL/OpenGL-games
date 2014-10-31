@@ -1,13 +1,12 @@
-﻿Build started 2014-10-30 19:13:52.
+﻿Build started 2014-10-29 20:24:13.
      1>Project "C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\PGK\PGK.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glfw-3.0.1.bin.WIN32\include" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glew-1.9.0\include" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\common" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glm" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\helpfulfuncs.hpp(174): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\helpfulfuncs.hpp(176): warning C4305: '+=' : truncation from 'double' to 'float'
-     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\helpfulfuncs.hpp(179): warning C4305: '-=' : truncation from 'double' to 'float'
      1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(10): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(83): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(82): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(84): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\258325\documents\github\opengl-games\pgk\pgk\main.cpp(87): warning C4305: '-=' : truncation from 'double' to 'float'
          GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
          GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
        Link:
@@ -21,4 +20,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.61
+Time Elapsed 00:00:02.07

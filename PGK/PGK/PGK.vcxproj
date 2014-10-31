@@ -98,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.hpp" />
-    <ClInclude Include="Belka.hpp" />
     <ClInclude Include="HelpfulFuncs.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
