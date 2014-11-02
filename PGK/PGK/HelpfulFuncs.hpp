@@ -163,7 +163,7 @@ void startAnimation(mat4& View, float& camManip, bool& fadeout, bool& game, GLFW
 			{
 				camManip +=0.5;
 				View       = glm::lookAt(
-										glm::vec3(camManip,0,45), // Camera is at (4,3,3), in World Space
+										glm::vec3(camManip,0,25), // Camera is at (4,3,3), in World Space
 										glm::vec3(0,0,0), // and looks at the origin
 										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
 								   );
@@ -180,10 +180,10 @@ void startAnimation(mat4& View, float& camManip, bool& fadeout, bool& game, GLFW
 					else
 					{
 						game = true;
-						camManip = 45;
+						camManip = 25;
 					}
 				View       = glm::lookAt(
-										glm::vec3(sin(camManip*2)*7,-sin(camManip)*7,45), // Camera is at (4,3,3), in World Space
+										glm::vec3(sin(camManip*2)*7,-sin(camManip)*7,25), // Camera is at (4,3,3), in World Space
 										glm::vec3(0,0,0), // and looks at the origin
 										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
 										);

@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\OpenGL_Wrappers\common\controls.cpp" />
+    <ClCompile Include="..\OpenGL_Wrappers\common\objloader.cpp" />
     <ClCompile Include="..\OpenGL_Wrappers\common\shader.cpp" />
     <ClCompile Include="..\OpenGL_Wrappers\common\text2D.cpp" />
     <ClCompile Include="..\OpenGL_Wrappers\common\texture.cpp" />
@@ -98,8 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.hpp" />
+    <ClInclude Include="Ball.hpp" />
     <ClInclude Include="Belka.hpp" />
     <ClInclude Include="HelpfulFuncs.hpp" />
+    <ClInclude Include="Tile.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
