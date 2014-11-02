@@ -20,7 +20,7 @@ public:
 	{
 		if(alive)
 		{
-			MVP = Projection * View * glm::translate(mat4(1.0f),vec3(x,y,0))* glm::scale(mat4(1.0f), vec3(0.1,0.05,0)) * Model ;
+			MVP = Projection * View * glm::translate(mat4(1.0f),vec3(x,y,0))* glm::scale(mat4(1.0f), vec3(0.1,0.05,0.5)) * Model ;
 			DrawWithTexture(TextureShaders, MatrixID, MVP, logo_buffer, uvbuffer, logo, TextureID,36);
 		}
 	}

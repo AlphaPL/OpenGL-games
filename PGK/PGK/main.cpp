@@ -80,13 +80,18 @@ int main( void )
 
 	float camManip=-200;
 	bool fadeout = false;
-	bool game = false;
+	bool game = true;
 	bool rolling = false;
 	if(game)
 		camManip = 25;
 	
 	float heheszki = 0;
+	int howManyDead = 0;
+	bool endGame = false;
 	do{
+
+		howManyDead = 0;
+
 		if (glfwGetKey( window, GLFW_KEY_LEFT ) == GLFW_PRESS)
 		{
 			belka.moveLeft();
@@ -116,7 +121,7 @@ int main( void )
 
 			View       = glm::lookAt(
 										glm::vec3(0,0,camManip), // Camera is at (4,3,3), in World Space
-										glm::vec3(0,0,0), // and looks at the origin
+										glm::vec3(0,0,-1000), // and looks at the origin
 										glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
 										);
 			if(heheszki < 180.0f)
@@ -126,6 +131,8 @@ int main( void )
 
 		}
 
+		if(endGame)
+			camManip -= 0.02;
 
 		back.draw(MVP,Projection,View,  Model *  glm::rotate(mat4(1.0f), heheszki, vec3(0,1,0)) , TextureShaders, MatrixID, TextureID);
 
@@ -136,30 +143,44 @@ int main( void )
 			belka.draw(MVP,Projection, View, Model  , TextureShaders, MatrixID, TextureID);
 			for(int i=0;i<11;i++)
 			{
+				if(!redTiles[i]->alive)
+					howManyDead++;
 				redTiles[i]->collision(ball);
 				redTiles[i]->draw(MVP,Projection, View, Model  , TextureShaders, MatrixID, TextureID);
 			}
 			for(int i=0;i<11;i++)
 			{
+				if(!blueTiles[i]->alive)
+					howManyDead++;
 				blueTiles[i]->collision(ball);
 				blueTiles[i]->draw(MVP,Projection, View, Model  , TextureShaders, MatrixID, TextureID);
 			}
 			for(int i=0;i<11;i++)
 			{
+				if(!greenTiles[i]->alive)
+					howManyDead++;
 				greenTiles[i]->collision(ball);
 				greenTiles[i]->draw(MVP,Projection, View, Model  , TextureShaders, MatrixID, TextureID);
 			}
 			for(int i=0;i<11;i++)
 			{
+				if(!yellowTiles[i]->alive)
+					howManyDead++;
 				yellowTiles[i]->collision(ball);
 				yellowTiles[i]->draw(MVP,Projection, View, Model  , TextureShaders, MatrixID, TextureID);
 			}
+
+			if(howManyDead == 44 || ball.y < -1.8)
+				endGame = true;
 		}
 		
 		// Draw Text
 
 		if(camManip>0 && !game)
 			printText2D("Press any button to start", 30, 100, 30);
+
+		if(camManip < 0 )
+			break;
 		// Swap Buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
