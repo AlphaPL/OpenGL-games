@@ -161,7 +161,7 @@ void startAnimation(mat4& View, float& camManip, bool& fadeout, bool& game, GLFW
 {
 			if(camManip<0 && !fadeout)
 			{
-				camManip +=0.5;
+				camManip +=2;
 				View       = glm::lookAt(
 										glm::vec3(camManip,0,25), // Camera is at (4,3,3), in World Space
 										glm::vec3(0,0,0), // and looks at the origin
@@ -171,12 +171,12 @@ void startAnimation(mat4& View, float& camManip, bool& fadeout, bool& game, GLFW
 			else
 			{
 				if(camManip>6.28)
-					camManip=0.1;
+					camManip=0.2;
 				if(!fadeout)
-				camManip += 0.01;
+				camManip += 0.02;
 				else
 					if(camManip>0)
-						camManip-=0.01;
+						camManip-=0.02;
 					else
 					{
 						game = true;

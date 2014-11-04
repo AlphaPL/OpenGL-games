@@ -20,7 +20,7 @@ public:
 	GLint size;
 	void draw(mat4 MVP,mat4 Projection, mat4 View, mat4 Model, GLint TextureShaders , GLint MatrixID , GLint TextureID, GLint ColorShaders)
 	{
-		MVP = Projection * View * glm::translate(mat4(1.0f),vec3(x,y,0.125))* glm::scale(mat4(1.0f), vec3(0.125,0.125,0.125)) * Model ;
+		MVP = Projection * View * glm::translate(mat4(1.0f),vec3(x,y,0.125))* glm::scale(mat4(1.0f), vec3(0.125,0.125,0.125)) * glm::rotate(mat4(1.0f), (x/2.2f)*90.0f,vec3(0,1,0)) *glm::rotate(mat4(1.0f), (y/2.3f)*-360.0f,vec3(1,0,0))* Model ;
 		DrawWithoutTexture(ColorShaders, MatrixID, MVP, vertexbuffer, vertexbuffer, size);
 	}
 

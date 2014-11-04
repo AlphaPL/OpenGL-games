@@ -3,9 +3,11 @@
 #include"Belka.hpp"
 #include"Tile.hpp"
 #include"Ball.hpp"
-
+int NewTime, LastTime;
 GLFWwindow* window;
 
+
+double FPS = 80.0f;
 
 
 int main( void )
@@ -80,7 +82,7 @@ int main( void )
 
 	float camManip=-200;
 	bool fadeout = false;
-	bool game = true;
+	bool game = false;
 	bool rolling = false;
 	if(game)
 		camManip = 25;
@@ -89,6 +91,8 @@ int main( void )
 	int howManyDead = 0;
 	bool endGame = false;
 	do{
+
+		double startTime = glfwGetTime();
 
 		howManyDead = 0;
 
@@ -179,11 +183,21 @@ int main( void )
 		if(camManip>0 && !game)
 			printText2D("Press any button to start", 30, 100, 30);
 
-		if(camManip < 0 )
+		if(camManip < 0 && endGame)
 			break;
 		// Swap Buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		double endTime = glfwGetTime();
+
+		while(endTime - startTime < 1.0f / FPS)
+		{
+			endTime = glfwGetTime();
+			cout << endTime - startTime << " " << 1.0f / FPS << endl;
+		}
+
+		cout << endTime << " " << startTime << endl;
 
 	} // Check if the ESC key was pressed or the window was closed
 	while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
