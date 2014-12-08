@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\OpenGL_Wrappers\common\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\OpenGL_Wrappers\common\texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\OpenGL_Wrappers\common\controls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\OpenGL_Wrappers\common\text2D.cpp">
@@ -33,24 +27,24 @@
     <ClCompile Include="..\OpenGL_Wrappers\common\objloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tutorial08.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL_Wrappers\common\controls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ColorFragmentShader.fragmentshader">
+    <None Include="StandardShading.fragmentshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="SimpleFragmentShader.fragmentshader">
+    <None Include="StandardShading.vertexshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="SimpleVertexShader.vertexshader">
+    <None Include="Sphere.fragmentshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="TransformVertexShader.vertexshader">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="SimpleTransform.vertexshader">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="SingleColor.fragmentshader">
+    <None Include="Sphere.vertexshader">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -69,6 +63,12 @@
     </ClInclude>
     <ClInclude Include="Ball.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

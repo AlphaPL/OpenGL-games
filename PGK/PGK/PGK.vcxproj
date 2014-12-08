@@ -87,21 +87,21 @@
     <ClCompile Include="..\OpenGL_Wrappers\common\shader.cpp" />
     <ClCompile Include="..\OpenGL_Wrappers\common\text2D.cpp" />
     <ClCompile Include="..\OpenGL_Wrappers\common\texture.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="tutorial08.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ColorFragmentShader.fragmentshader" />
-    <None Include="SimpleFragmentShader.fragmentshader" />
-    <None Include="SimpleTransform.vertexshader" />
-    <None Include="SimpleVertexShader.vertexshader" />
-    <None Include="SingleColor.fragmentshader" />
-    <None Include="TransformVertexShader.vertexshader" />
+    <None Include="Sphere.fragmentshader" />
+    <None Include="Sphere.vertexshader" />
+    <None Include="StandardShading.fragmentshader" />
+    <None Include="StandardShading.vertexshader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.hpp" />
     <ClInclude Include="Ball.hpp" />
     <ClInclude Include="Belka.hpp" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="HelpfulFuncs.hpp" />
+    <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="Tile.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
