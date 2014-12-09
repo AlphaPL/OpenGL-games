@@ -43,7 +43,7 @@ int main( void )
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS); 
-
+	glEnable(GL_CULL_FACE);
 	// Cull triangles which normal is not towards the camera
 
 	GLuint VertexArrayID;
@@ -56,7 +56,7 @@ int main( void )
 	Sphere sphere("ball.obj", "Sphere.vertexshader", "Sphere.fragmentshader", vec3(1, 0, 0) );
 
 	Sphere monkey("suzanne.obj",  "StandardShading.vertexshader", "StandardShading.fragmentshader", vec3(0, 1, 0) );
-
+	monkey.pos = glm::vec3( 0, -2, 4 );
 	Cube cube("cube.obj",  "StandardShading.vertexshader", "StandardShading.fragmentshader", vec3(0.75, 0.75, 1) );
 
 	// Get a handle for our "LightPosition" uniform
@@ -69,7 +69,7 @@ int main( void )
 
 
 		// Compute the MVP matrix from keyboard and mouse input
-		computeMatricesFromInputs();
+		computeMatricesFromInputs(monkey.pos);
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
@@ -77,7 +77,7 @@ int main( void )
 		glm::vec3 lightPos = vec3(0, 30, 2);
 		sphere.move();
 		sphere.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
-		monkey.changeModel(position+glm::vec3(0,-2,-6), 1.0);
+		monkey.changeModel(monkey.pos, 20.0f);
 		monkey.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		cube.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		sphere.collision(monkey);

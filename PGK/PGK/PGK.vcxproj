@@ -96,6 +96,7 @@
     <None Include="StandardShading.vertexshader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\OpenGL_Wrappers\common\controls.hpp" />
     <ClInclude Include="Background.hpp" />
     <ClInclude Include="Ball.hpp" />
     <ClInclude Include="Belka.hpp" />

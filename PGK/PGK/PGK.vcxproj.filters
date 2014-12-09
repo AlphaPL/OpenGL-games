@@ -70,5 +70,8 @@
     <ClInclude Include="Sphere.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\OpenGL_Wrappers\common\controls.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

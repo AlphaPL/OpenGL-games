@@ -23,7 +23,7 @@ glm::mat4 getProjectionMatrix(){
 // Initial position : on +Z
 glm::vec3 position = glm::vec3( 0, 0, 10 ); 
 // Initial horizontal angle : toward -Z
-float horizontalAngle = 3.14f;
+float horizontalAngle = 0.0f;
 // Initial vertical angle : none
 float verticalAngle = 0.0f;
 // Initial Field of View
@@ -33,8 +33,7 @@ float speed = 150.0f; // 3 units / second
 float mouseSpeed = 0.005f;
 bool game = true;
 
-
-void computeMatricesFromInputs(){
+void computeMatricesFromInputs(vec3& monkeyPos){
 
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glfwGetTime();
@@ -51,17 +50,10 @@ void computeMatricesFromInputs(){
 	glfwSetCursorPos(window, 1024/2, 768/2);
 
 	// Compute new orientation
-	horizontalAngle += mouseSpeed * float(1024/2 - xpos );
-	verticalAngle   += mouseSpeed * float( 768/2 - ypos );
-	
-	if(verticalAngle > 0.35)
-		verticalAngle = 0.35;
-	if(verticalAngle < -0.35)
-		verticalAngle = -0.35;
-	if(horizontalAngle > 3.5)
-		horizontalAngle = 3.5;
-	if(horizontalAngle < 2.5)
-		horizontalAngle = 2.5;
+	horizontalAngle += xpos - 1024/2 ;
+	verticalAngle   += ypos - 768/2;
+	std::cout << horizontalAngle << std::endl;
+
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
 	glm::vec3 direction(
 		cos(verticalAngle) * sin(horizontalAngle), 
@@ -90,12 +82,12 @@ void computeMatricesFromInputs(){
 	// Strafe right
 	if(position.x < 85.0)
 		if (glfwGetKey( window, GLFW_KEY_RIGHT ) == GLFW_PRESS){
-			position += right * deltaTime * speed;
+			monkeyPos += right * deltaTime * speed;
 		}
 	// Strafe left
 	if(position.x > - 85.0)
 		if (glfwGetKey( window, GLFW_KEY_LEFT ) == GLFW_PRESS){
-			position -= right * deltaTime * speed;
+			monkeyPos -= right * deltaTime * speed;
 		}
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
@@ -104,9 +96,10 @@ void computeMatricesFromInputs(){
 	// Camera matrix
 	ViewMatrix       = glm::lookAt(
 								position,           // Camera is here
-								position+direction, // and looks here : at the same position, plus "direction"
-								up                  // Head is up (set to 0,-1,0 to look upside-down)
+								vec3(0,0,0), // and looks here : at the same position, plus "direction"
+								vec3(0,1,0)                  // Head is up (set to 0,-1,0 to look upside-down)
 						   );
+	ViewMatrix = ViewMatrix * glm::rotate(mat4(1.0f), verticalAngle, vec3(1,0,0)) * glm::rotate(mat4(1.0f), horizontalAngle, vec3(0,1,0));
 
 	// For the next frame, the "last time" will be "now"
 	lastTime = currentTime;

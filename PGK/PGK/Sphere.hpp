@@ -44,12 +44,14 @@ class Sphere
 	vec3 ShiningColor;
 	GLuint ShiningColorID;
 	bool Shining;
-	vec3 pos;
 	float level;
 protected:
  glm::mat4 ModelMatrix;
+	
+
 
 	public:
+		vec3 pos;
 		Sphere(char textureToLoad[], char vertexShader[], char fragmentShader[], vec3 dcolor)
 		{
 			Shining = false;
@@ -188,7 +190,7 @@ protected:
 					level -= 3.0f;
 				else
 				{
-					game = false;
+				//	game = false;
 				}
 				reset();
 			}
