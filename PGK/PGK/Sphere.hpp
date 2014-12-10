@@ -165,6 +165,20 @@ protected:
 				ShiningColor = Shining ? vec3(0,1,0) : vec3(0,0,0);
 		}
 
+		struct compare {
+			bool operator()(glm::vec3 const& s1, glm::vec3 const& s2) {
+
+			 }
+		};
+
+		float distance(vec3 a, vec3 b)
+		{
+				float xd = b.x-a.x;
+				float yd = b.y-a.y;
+				float zd = b.z-a.z;
+				return glm::sqrt(xd*xd + yd*yd + zd*zd);
+		}
+
 		void move()
 		{
 			pos.z += level;
