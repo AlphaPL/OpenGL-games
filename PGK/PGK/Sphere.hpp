@@ -7,6 +7,7 @@
 #include <iostream>
 // Include GLEW
 #include <GL/glew.h>
+#include <algorithm>
 
 // Include GLFW
 #include <GLFW/glfw3.h>
@@ -21,6 +22,15 @@ using namespace glm;
 #include <controls.hpp>
 #include <objloader.hpp>
 extern bool game;
+
+class Sorto
+{
+	public:
+		vec3 one;
+		vec3 two;
+		vec3 three;
+		vec3 normal;
+};
 
 class Sphere
 {
@@ -45,9 +55,9 @@ class Sphere
 	GLuint ShiningColorID;
 	bool Shining;
 	float level;
+	vec3 cameraPos;
 protected:
- glm::mat4 ModelMatrix;
-	
+    glm::mat4 ModelMatrix;
 
 
 	public:
@@ -56,7 +66,7 @@ protected:
 		{
 			Shining = false;
 			level = 6.0f;
-			pos = vec3(RandomFloat(-80.0f, 80.0f),0,-1000.0f);
+			pos = vec3(0.0f,0,0.0f);
 			ShiningColor = vec3(0,0,0);
 			ModelMatrix = glm::mat4(1.0);
 			diffuseColor = dcolor;
@@ -158,30 +168,90 @@ protected:
 
 		void reset()
 		{
-				pos.z = -1000.0f;
-				level += 1.0f;
+				pos.z = -100;
+			//	level += 1.0f;
 				pos.x = RandomFloat(-80.0f, 80.0f);
 				Shining = RandomFloat(0.0, 1.0f) > 0.7f ? true : false;
 				ShiningColor = Shining ? vec3(0,1,0) : vec3(0,0,0);
 		}
 
-		struct compare {
-			bool operator()(glm::vec3 const& s1, glm::vec3 const& s2) {
-
-			 }
-		};
-
-		float distance(vec3 a, vec3 b)
+		struct Xgreater
 		{
+			mat4 ViewMatrix;
+			mat4 ModelMatrix;
+			vec3 lightPos;
+			float distance(const vec3& a, const vec3& b) const
+			{
 				float xd = b.x-a.x;
 				float yd = b.y-a.y;
 				float zd = b.z-a.z;
 				return glm::sqrt(xd*xd + yd*yd + zd*zd);
+			}
+			bool operator()( const Sorto& lx, const Sorto& rx ) const {
+				vec3 triangleOne = vec3((lx.one.x+lx.two.x+lx.three.x)/3.0, (lx.one.y+lx.two.y+lx.three.y)/3.0, (lx.one.z+lx.two.z+lx.three.z)/3.0);  
+				vec3 triangleTwo = vec3((rx.one.x+rx.two.x+rx.three.x)/3.0, (rx.one.y+rx.two.y+rx.three.y)/3.0, (rx.one.z+rx.two.z+rx.three.z)/3.0);  
+				vec4 triangleOne4(triangleOne,1); 
+				vec4 triangleTwo4(triangleOne,1); 
+				triangleOne4 = ViewMatrix * ModelMatrix * triangleOne4;
+				triangleTwo4 = ViewMatrix * ModelMatrix * triangleTwo4;
+				triangleOne.x = triangleOne4.x;
+				triangleOne.y = triangleOne4.y;
+				triangleOne.z = triangleOne4.z;
+				triangleTwo.x = triangleTwo4.x;
+				triangleTwo.y = triangleTwo4.y;
+				triangleTwo.z = triangleTwo4.z;
+				return distance(triangleOne, lightPos) > distance(triangleOne, lightPos);
+			}
+
+
+		};
+
+
+		void sortVertices(vec3& lightPos, mat4 ViewM)
+		{
+				std::vector<Sorto> temp_sorto; 
+				for(int i=0;i<vertices.size();i+=3)
+				{
+					Sorto rec;
+					rec.one = vertices[i];
+					rec.two = vertices[i+1];
+					rec.three = vertices[i+2];
+					rec.normal = normals[i/3];
+					temp_sorto.push_back(rec);
+				}
+				struct Xgreater sorter;
+				sorter.lightPos = lightPos;
+				sorter.ViewMatrix = ViewM;
+				sorter.ModelMatrix = ModelMatrix;
+				std::sort(temp_sorto.begin(), temp_sorto.end(), sorter);
+				std::vector<vec3> vec_temp;
+				std::vector<vec3> norm_temp;
+				for(int i=0;i<temp_sorto.size();i++)
+				{
+					vec_temp.push_back(temp_sorto[i].one);
+					vec_temp.push_back(temp_sorto[i].two);
+					vec_temp.push_back(temp_sorto[i].three);
+					norm_temp.push_back(temp_sorto[i].normal);
+					std::cout << i << std::endl;
+				}
+
+				vertices = vec_temp;
+				normals = norm_temp;
+
+				std::cout << normals.size() << " " << vertices.size() << std::endl;
+
+				glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+				glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+
+				glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+				glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 		}
+
+
 
 		void move()
 		{
-			pos.z += level;
+			//pos.z += level;
 			if(pos.z > 0.0f)
 			{
 				reset();
@@ -199,7 +269,6 @@ protected:
 		{
 			if(abs(pos.x - monkey.pos.x) < 15.0f && abs(pos.z - monkey.pos.z) < 15.0f)
 			{
-				std::cout << "Collision!" << std::endl;
 				if(Shining && level > 2.0f)
 					level -= 3.0f;
 				else

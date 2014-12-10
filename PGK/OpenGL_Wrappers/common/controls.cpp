@@ -52,7 +52,6 @@ void computeMatricesFromInputs(vec3& monkeyPos){
 	// Compute new orientation
 	horizontalAngle += xpos - 1024/2 ;
 	verticalAngle   += ypos - 768/2;
-	std::cout << horizontalAngle << std::endl;
 
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
 	glm::vec3 direction(
