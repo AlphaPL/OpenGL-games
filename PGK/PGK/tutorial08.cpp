@@ -43,8 +43,9 @@ int main( void )
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS); 
-	glEnable(GL_CULL_FACE);
 	// Cull triangles which normal is not towards the camera
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
@@ -73,14 +74,15 @@ int main( void )
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
-
+		glEnable(GL_CULL_FACE);
 		glm::vec3 lightPos = vec3(0, 30, 2);
 		sphere.move();
-		sphere.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		monkey.changeModel(monkey.pos, 20.0f);
 		monkey.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		cube.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		sphere.collision(monkey);
+		glDisable(GL_CULL_FACE);
+		sphere.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
