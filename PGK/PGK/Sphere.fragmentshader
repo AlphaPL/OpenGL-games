@@ -9,7 +9,7 @@ in vec3 LightDirection_cameraspace;
 in vec3 MaterialDiffuseColor;
 in vec3 Position_cameraspace;
 // Ouput data
-out vec4 color;
+out vec3 color;
 
 // Values that stay constant for the whole mesh.
 uniform sampler2D myTextureSampler;
@@ -52,7 +52,7 @@ void main(){
 	//  - Looking elsewhere -> < 1
 	float cosAlpha = clamp( dot( E,R ), 0,1 );
 	
-	color.rgb = 
+	color = 
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		ShiningColor/(pow(1.0025,distanceMon)) +
@@ -60,7 +60,6 @@ void main(){
 		MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance) +
 		// Specular : reflective highlight, like a mirror
 		MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance) ;
-	color.a = 0.3;
 		
 
 }

@@ -1,4 +1,4 @@
-﻿Build started 2014-12-10 16:37:23.
+﻿Build started 2014-12-09 20:10:35.
      1>Project "C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\PGK\PGK.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glfw-3.0.1.bin.WIN32\include" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glew-1.9.0\include" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\common" /I"C:\Users\258325\Documents\GitHub\OpenGL-games\PGK\\OpenGL_Wrappers\glm" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt tutorial08.cpp
@@ -17,4 +17,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.65
+Time Elapsed 00:00:01.16
