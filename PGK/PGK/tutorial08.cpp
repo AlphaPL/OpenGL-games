@@ -31,6 +31,7 @@ int main( void )
 		fprintf(stderr, "Failed to initialize GLEW\n");
 		return -1;
 	}
+
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetCursorPos(window, 1024/2, 768/2);
@@ -73,7 +74,6 @@ int main( void )
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
-		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		glm::vec3 lightPos = vec3(0, 30, 2);
 		sphere.move();
@@ -81,9 +81,7 @@ int main( void )
 		monkey.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		cube.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		sphere.collision(monkey);
-		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_CULL_FACE);
-		sphere.sortVertices(position, getViewMatrix());
 		sphere.draw(getProjectionMatrix(), getViewMatrix(), lightPos, position);
 		// Swap buffers
 		glfwSwapBuffers(window);
