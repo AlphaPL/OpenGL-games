@@ -1,8 +1,16 @@
 #ifndef CONTROLS_HPP
 #define CONTROLS_HPP
-
 void computeMatricesFromInputs(vec3& monkeyPos);
-glm::mat4 getViewMatrix();
-glm::mat4 getProjectionMatrix();
+
+class Control
+{
+	public:
+		static mat4 ViewMatrix;
+		static mat4 ProjectionMatrix;
+		static bool inGame;
+		static void computeMatricesFromInputs(vec3& monkeyPos);
+		static glm::mat4 getViewMatrix();
+		static glm::mat4 getProjectionMatrix();
+};
 
 #endif

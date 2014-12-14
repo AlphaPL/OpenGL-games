@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <cstring>
-
+#include <iostream>
 #include <glm/glm.hpp>
 
 #include "objloader.hpp"
@@ -85,7 +85,6 @@ bool loadOBJ(
 		}
 
 	}
-
 	// For each vertex of each triangle
 	for( unsigned int i=0; i<vertexIndices.size(); i++ ){
 
@@ -105,7 +104,7 @@ bool loadOBJ(
 		out_normals .push_back(normal);
 	
 	}
-
+	std::cout << out_normals.size();
 	return true;
 }
 

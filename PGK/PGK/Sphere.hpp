@@ -7,7 +7,7 @@
 #include <iostream>
 // Include GLEW
 #include <GL/glew.h>
-
+#include<algorithm>
 // Include GLFW
 #include <GLFW/glfw3.h>
 
@@ -21,6 +21,27 @@ using namespace glm;
 #include <controls.hpp>
 #include <objloader.hpp>
 extern bool game;
+
+struct Triplet
+{
+	vec3 one;
+	vec3 oneNormal;
+	vec3 two;
+	vec3 twoNormal;
+	vec3 three;
+	vec3 threeNormal;
+	vec4 center;
+};
+
+struct sortstruct
+{
+
+	bool operator() ( Triplet& i, Triplet& j )
+	{
+		return (i.center.x*i.center.x + i.center.y*i.center.y + i.center.z*i.center.z) > (j.center.x*j.center.x + j.center.y*j.center.y + j.center.z*j.center.z);
+	}
+};
+
 
 class Sphere
 {
@@ -150,10 +171,11 @@ protected:
 				glDeleteBuffers(1, &normalbuffer);
 		}
 
-		void changeModel(glm::vec3 position, float scale = 1)
+		void changeModel(glm::vec3 position, float scale = 1, float rotate = 0.0f)
 		{
 			pos = position;
-			ModelMatrix = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), position),180.0f, glm::vec3(0,1,0)), vec3(scale,scale,scale));
+			std::cout << scale << std::endl;
+			ModelMatrix = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), position),rotate, glm::vec3(0,1,0)), vec3(scale,scale,scale));
 		}
 
 		void reset()
@@ -172,7 +194,55 @@ protected:
 			{
 				reset();
 			}
-			changeModel(pos, -0.019*(pos.z)+20.0);
+			changeModel(pos, (1000+pos.z)/20);
+		}
+
+		void sort(mat4 ViewMatrix)
+		{
+			std::vector<Triplet> sorting;
+			for(int i=0; i < vertices.size(); i += 3)
+			{
+				Triplet toSort;
+				toSort.one = vertices[i];
+				toSort.oneNormal = normals[i];
+				toSort.two = vertices[i+1];
+				toSort.twoNormal = normals[i+1];
+				toSort.three = vertices[i+2];
+				toSort.threeNormal = normals[i+2];
+				toSort.center = vec4(vertices[i].x + vertices[i+1].x + vertices[i+2].x, vertices[i].y + vertices[i+1].y + vertices[i+2].y, vertices[i].z + vertices[i+1].z + vertices[i+2].z, 1.0f);
+				toSort.center.x = toSort.center.x/3;
+				toSort.center.y = toSort.center.y/3;
+				toSort.center.z = toSort.center.z/3;
+				toSort.center = ViewMatrix * ModelMatrix * toSort.center;
+				sorting.push_back(toSort);
+			}
+			sortstruct s;
+			std::sort(sorting.begin(), sorting.end(), s);
+
+
+			for(int i=0; i< sorting.size(); i++)
+			{
+				vertices[3*i] = sorting[i].one;
+
+				vertices[3*i+1] = sorting[i].two;
+
+				vertices[3*i+2] = sorting[i].three;
+
+				normals[3*i] = sorting[i].oneNormal;
+
+				normals[3*i+1] = sorting[i].twoNormal;
+
+				normals[3*i+2] = sorting[i].threeNormal;
+
+			}
+
+			glGenBuffers(1, &vertexbuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+
+			glGenBuffers(1, &normalbuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+			glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 		}
 
 		float RandomFloat(float min, float max)
@@ -190,10 +260,11 @@ protected:
 					level -= 3.0f;
 				else
 				{
-				//	game = false;
+					Control::inGame = false;
 				}
 				reset();
 			}
 		}
+
 };
 #endif

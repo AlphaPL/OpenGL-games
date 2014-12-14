@@ -97,13 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\OpenGL_Wrappers\common\controls.hpp" />
-    <ClInclude Include="Background.hpp" />
-    <ClInclude Include="Ball.hpp" />
-    <ClInclude Include="Belka.hpp" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="HelpfulFuncs.hpp" />
     <ClInclude Include="Sphere.hpp" />
-    <ClInclude Include="Tile.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
